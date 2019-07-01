@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--白日依山尽，黄河入海流。欲穷千里目，更上一层楼。-->
+    <EditText
+        android:id="@+id/et_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="10dp"
+        android:hint="输入"
+        android:text="你好"
+        android:textSize="20sp"
+        android:gravity="top|left"
+        />
+
+    <Button
+        android:id="@+id/bt_go"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp"
+        android:text="驱动"
+        android:textSize="20sp"
+        />
+</LinearLayout>
