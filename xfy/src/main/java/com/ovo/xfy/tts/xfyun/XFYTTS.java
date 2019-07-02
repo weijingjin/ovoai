@@ -1,4 +1,4 @@
-package com.ovo.xfy.xfyun;
+package com.ovo.xfy.tts.xfyun;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,8 +11,8 @@ import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.SpeechUtility;
 import com.iflytek.cloud.SynthesizerListener;
-import com.ovo.xfy.TCYLog;
-import com.ovo.xfy.impl.ALYTTSCompletedListener;
+import com.ovo.common.utils.LogUtils;
+import com.ovo.xfy.tts.impl.ALYTTSCompletedListener;
 
 /**
  * 讯飞云tts
@@ -57,7 +57,7 @@ public class XFYTTS {
         // 初始化合成对象
         //此处调用与SpeechDemo中重复，两处只调用其一即可
         this.context = context;
-        SpeechUtility.createUtility(context, "appid=5d0b5a");
+        SpeechUtility.createUtility(context, "appid=5d0b5ab0");
         mTts = SpeechSynthesizer.createSynthesizer(context, mTtsInitListener);
     }
 
@@ -107,9 +107,9 @@ public class XFYTTS {
         public void onInit(int code) {
             Log.d(TAG, "InitListener init() code = " + code);
             if (code != ErrorCode.SUCCESS) {
-                TCYLog.log(TAG, "初始化失败,错误码："+code);
+                LogUtils.log(TAG, "初始化失败,错误码："+code);
             } else {
-                TCYLog.log(TAG, "初始化成功");
+                LogUtils.log(TAG, "初始化成功");
                 if (alyttsCompletedListener != null){
                     alyttsCompletedListener.InitSuccess();
                 }
@@ -127,36 +127,36 @@ public class XFYTTS {
 
         @Override
         public void onSpeakBegin() {
-            TCYLog.log(TAG, "开始播放");
+            LogUtils.log(TAG, "开始播放");
         }
 
         @Override
         public void onSpeakPaused() {
-            TCYLog.log(TAG, "暂停播放");
+            LogUtils.log(TAG, "暂停播放");
         }
 
         @Override
         public void onSpeakResumed() {
-            TCYLog.log(TAG, "继续播放");
+            LogUtils.log(TAG, "继续播放");
         }
 
         @Override
         public void onBufferProgress(int percent, int beginPos, int endPos,
                                      String info) {
-//            TCYLog.log(TAG, "合成进度=" + percent);
+//            LogUtils.log(TAG, "合成进度=" + percent);
             // 合成进度
         }
 
         @Override
         public void onSpeakProgress(int percent, int beginPos, int endPos) {
-//            TCYLog.log(TAG, "播放进度=" + percent);
+//            LogUtils.log(TAG, "播放进度=" + percent);
             // 播放进度
         }
 
         @Override
         public void onCompleted(SpeechError error) {
             if (error == null) {
-                TCYLog.log(TAG, "播放完成");
+                LogUtils.log(TAG, "播放完成");
                 if (alyttsCompletedListener != null){
                     if (textId != -1){
                         alyttsCompletedListener.TTSCompleted(textId);
@@ -166,7 +166,7 @@ public class XFYTTS {
                     }
                 }
             } else if (error != null) {
-                TCYLog.log(error.getPlainDescription(true));
+                LogUtils.log(error.getPlainDescription(true));
             }
         }
 

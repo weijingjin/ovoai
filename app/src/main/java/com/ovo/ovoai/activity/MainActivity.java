@@ -8,13 +8,13 @@ import android.widget.EditText;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.ovo.common.base.BaseActivity;
+import com.ovo.common.utils.LogUtils;
+import com.ovo.common.utils.StringUtils;
+import com.ovo.common.utils.ToastUtils;
 import com.ovo.common.utils.pingyin.PinYinUtils;
 import com.ovo.common.utils.pingyin.PinyinUtil;
 import com.ovo.ovoai.R;
 import com.ovo.ovoai.app.MyApplication;
-import com.ovo.ovoai.utils.LogUtils;
-import com.ovo.ovoai.utils.StringUtils;
-import com.ovo.ovoai.utils.ToastUtils;
 import com.ovo.unity.utils.U3dUtils;
 
 import butterknife.BindView;
@@ -52,16 +52,17 @@ public class MainActivity extends BaseActivity {
             public void onClick(View v) {
                 String text = etText.getText().toString();
 
+                text = StringUtils.strNumtoChar(text);
+
+                text = text.replaceAll("℃", "摄氏度");
+                text = text.replaceAll("%", "百分之");
                 LogUtils.log(text);
-//                LogUtils.log("1");
                 char[]texts = text.toCharArray();
-//                LogUtils.log("2");
                 StringBuffer sb = new StringBuffer();
                 for (int i = 0; i < texts.length; i++) {
                     String py = PinyinUtil.polishPinyin(PinYinUtils.getPinYin(texts[i]));
                     sb.append(py);
                 }
-//                LogUtils.log("3");
                 LogUtils.log(sb.toString());
 
                 if (!StringUtils.isEmpty(text)) {

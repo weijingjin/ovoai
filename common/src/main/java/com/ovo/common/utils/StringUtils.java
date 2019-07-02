@@ -198,4 +198,68 @@ public class StringUtils {
         return m.matches();
     }
 
+    /**
+     * 字符串中提取数字
+     * @return
+     */
+    public static String[] StrGetNum(String str){
+        //正则表达式，用于匹配非数字串，+号用于匹配出多个非数字串
+        String regEx="[^0-9]+";
+        Pattern pattern = Pattern.compile(regEx);
+        //用定义好的正则表达式拆分字符串，把字符串中的数字留出来
+        return pattern.split(str);
+    }
+
+    /**
+     * 数字转汉字数字
+     * @param str
+     * @return
+     */
+    public static String NumtoChinese(String str) {
+        String[] s1 = { "零", "一", "二", "三", "四", "五", "六", "七", "八", "九" };
+        String[] s2 = { "十", "百", "千", "万", "十", "百", "千", "亿", "十", "百", "千" };
+        String result = "";
+        int n = str.length();
+        for (int i = 0; i < n; i++) {
+            int num = str.charAt(i) - '0';
+            if (i != n - 1 && num != 0) {
+                result += s1[num] + s2[n - 2 - i];
+            } else {
+                result += s1[num];
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 将字符串中的数字转汉字数字
+     * @param str
+     * @return
+     */
+    public static String strNumtoChar(String str) {
+        String text = str;
+        String [] strNum = StrGetNum(text);
+        if (strNum == null || strNum.length == 0){
+            return text;
+        }
+        String[] s1 = { "零", "一", "二", "三", "四", "五", "六", "七", "八", "九" };
+        String[] s2 = { "十", "百", "千", "万", "十", "百", "千", "亿", "十", "百", "千" };
+        for (int k = 0; k < strNum.length; k++) {
+            if (!StringUtils.isEmpty(strNum[k])){
+                String result = "";
+                int n = strNum[k].length();
+                for (int i = 0; i < n; i++) {
+                    int num = strNum[k].charAt(i) - '0';
+                    if (i != n - 1 && num != 0) {
+                        result += s1[num] + s2[n - 2 - i];
+                    } else {
+                        result += s1[num];
+                    }
+                }
+                text = text.replace(strNum[k], result);
+            }
+        }
+
+        return text;
+    }
 }

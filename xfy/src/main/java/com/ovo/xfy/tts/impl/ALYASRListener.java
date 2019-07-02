@@ -1,4 +1,4 @@
-package com.ovo.xfy.impl;
+package com.ovo.xfy.tts.impl;
 
 /**
  * 语音识别返回结果

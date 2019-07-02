@@ -1,6 +1,5 @@
 package com.ovo.common.utils.pingyin;
 
-import com.ovo.common.utils.LogUtils;
 import com.ovo.common.utils.StringUtils;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
@@ -108,10 +107,8 @@ public class PinYinUtils {
                 || "”".equals(String.valueOf(nameChar))
                 || ":".equals(String.valueOf(nameChar))
                 || "：".equals(String.valueOf(nameChar)))return String.valueOf(nameChar);
-        if ("℃".equals(String.valueOf(nameChar))){
-            nameChar = '度';
-        }else if ("~".equals(String.valueOf(nameChar))){
-            nameChar = '到';
+        if ("~".equals(String.valueOf(nameChar))){
+            nameChar = '至';
         }else if (StringUtils.isNumeric(String.valueOf(nameChar))){
             nameChar = strNum[Integer.valueOf(String.valueOf(nameChar))];
         }else if (" ".equals(String.valueOf(nameChar))){
@@ -122,15 +119,25 @@ public class PinYinUtils {
         HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();
         defaultFormat.setCaseType(HanyuPinyinCaseType.LOWERCASE);
         defaultFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
-        if (nameChar > 128) {
+        //匹配是否是汉字
+        if (Character.toString(nameChar).matches("[\\u4E00-\\u9FA5]+")) {
             try {
                 sb.append(PinyinHelper.toHanyuPinyinStringArray(nameChar, defaultFormat)[0]);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else {
+        }else {
             sb.append(nameChar);
         }
+//        if (nameChar > 128) {
+//            try {
+//                sb.append(PinyinHelper.toHanyuPinyinStringArray(nameChar, defaultFormat)[0]);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        } else {
+//            sb.append(nameChar);
+//        }
         return sb.toString();
     }
 }

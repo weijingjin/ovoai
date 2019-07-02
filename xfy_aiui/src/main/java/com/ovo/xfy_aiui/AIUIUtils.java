@@ -247,8 +247,9 @@ public class AIUIUtils {
      */
     public void stopAIUI() {
         if (null != this.mAIUIAgent) {
+            String params = "data_type=audio,sample_rate=16000";
             AIUIMessage stopMsg = new AIUIMessage(AIUIConstant.CMD_STOP_RECORD,
-                    0, 0, "data_type=audio,sample_rate=16000", null);
+                    0, 0, params, null);
             mAIUIAgent.sendMessage(stopMsg);
         }
     }

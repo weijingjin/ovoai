@@ -6,8 +6,8 @@ import com.ovo.common.utils.LogUtils;
 import com.ovo.common.utils.StringUtils;
 import com.ovo.common.utils.pingyin.PinYinUtils;
 import com.ovo.common.utils.pingyin.PinyinUtil;
-import com.ovo.xfy.impl.ALYTTSCompletedListener;
-import com.ovo.xfy.xfyun.XFYTTS;
+import com.ovo.xfy.tts.impl.ALYTTSCompletedListener;
+import com.ovo.xfy.tts.xfyun.XFYTTS;
 import com.ovo.xfy_aiui.AIUIUtils;
 
 import java.util.HashMap;
@@ -124,15 +124,17 @@ public class U3dUtils {
                                     json = json + dataMap.get(text[j]);
                                 }
                             }
-                            TcpClient.getIntance().send(json);
-//                            LogUtils.log(TAG,PY[i], json);
+                            if (!StringUtils.isEmpty(json)){
+                                TcpClient.getIntance().send(json);
+                            }
+                            LogUtils.log(TAG,PY[i] + "===" + json);
                             Thread.sleep(360);
                         }
                     }
                     /**符号**/
                     String duanju = dataMap.get(",");
                     TcpClient.getIntance().send(duanju);
-//                    LogUtils.log(TAG, "," + duanju);
+                    LogUtils.log(TAG, "," + duanju);
                     Thread.sleep(400);
                 }catch (Exception e){
                     e.printStackTrace();
@@ -184,7 +186,11 @@ public class U3dUtils {
             }catch (Exception e){
                 e.printStackTrace();
             }
+            //数字转汉字
+            result = StringUtils.strNumtoChar(result);
 
+            result = result.replaceAll("℃", "摄氏度");
+            result = result.replaceAll("%", "百分之");
             sb.setLength(0);
             char[]texts = result.toCharArray();
             for (int i = 0; i < texts.length; i++) {

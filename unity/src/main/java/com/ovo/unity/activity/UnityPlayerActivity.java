@@ -14,6 +14,7 @@ import com.ovo.common.app.BaseApplication;
 import com.ovo.unity.utils.DataUtils;
 import com.ovo.unity.utils.MyUnityPlayer;
 import com.ovo.unity.utils.TcpClient;
+import com.ovo.xfy.tts.xfyun.XFYTTS;
 import com.ovo.xfy_aiui.AIUIUtils;
 import com.unity3d.player.UnityPlayer;
 
@@ -38,7 +39,7 @@ public class UnityPlayerActivity extends Activity {
         mUnityPlayer.requestFocus();
 
         DataUtils.getInstance().initPYPorsonData();
-//        XFYTTS.getIntance().initXFY(this);
+        XFYTTS.getIntance().initXFY(this);
     }
 
     @Override

@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
-import com.ovo.xfy.xfyun.XFYTTS;
-
 public class BaseApplication extends Application {
 
     private static BaseApplication instance = null;
@@ -28,7 +26,7 @@ public class BaseApplication extends Application {
         super.onCreate();
         setContext(this);
 
-        XFYTTS.getIntance().initXFY(this);
+//        XFYTTS.getIntance().initXFY(this);
     }
 
     public Context getContext() {

@@ -14,77 +14,78 @@ public class PinyinUtil {
             /*, "iong", "iang", "uang", "uan", "ian"*/ };
 
     public static String polishPinyin(String name) {
-        if (name == null || "".equals(name))
-            return name;
+        try {
+            if (name == null || "".equals(name))
+                return name;
 
-        if (",".equals(name)
-                || "，".equals(name)
-                || ";".equals(name)
-                || "；".equals(name)
-                || ".".equals(name)
-                || "。".equals(name)
-                || "?".equals(name)
-                || "？".equals(name)
-                || "!".equals(name)
-                || "！".equals(name)
-                || "“".equals(name)
-                || "”".equals(name)
-                || ":".equals(name)
-                || "\"".equals(name)
-                || "：".equals(name))return "|,";
+            if (",".equals(name)
+                    || "，".equals(name)
+                    || ";".equals(name)
+                    || "；".equals(name)
+                    || ".".equals(name)
+                    || "。".equals(name)
+                    || "?".equals(name)
+                    || "？".equals(name)
+                    || "!".equals(name)
+                    || "！".equals(name)
+                    || "“".equals(name)
+                    || "”".equals(name)
+                    || ":".equals(name)
+                    || "\"".equals(name)
+                    || "：".equals(name))return "|,";
 
-        name = name.replaceAll("[0-9_]+", "");
+            name = name.replaceAll("[0-9_]+", "");
 
-        StringBuffer buffer = new StringBuffer();
-        char[] chars = name.toCharArray();
-        int size = chars.length;
+            StringBuffer buffer = new StringBuffer();
+            char[] chars = name.toCharArray();
+            int size = chars.length;
 
-        int i = 0;
-        boolean flag = true;// 当前检测的是声母还是韵母
-        while (i < size) {
-            if (flag) {
-                // 先判断前两位是不是声母
-                if (i + 1 < size && PinyinUtil.isShengmu(chars[i], chars[i + 1])) {
-                    buffer.append("|");
-                    buffer.append(chars, i, 2);
-                    buffer.append("&");
-                    i += 2;
-                    flag = false;
-                } else if (PinyinUtil.isShengmu(chars[i])) {
-                    buffer.append("|");
-                    buffer.append(chars[i]);
-                    buffer.append("&");
-                    flag = false;
-                    i++;
-                } else {
-                    flag = false;
-                    buffer.append("&");
+            int i = 0;
+            boolean flag = true;// 当前检测的是声母还是韵母
+            while (i < size) {
+                if (flag) {
+                    // 先判断前两位是不是声母
+                    if (i + 1 < size && PinyinUtil.isShengmu(chars[i], chars[i + 1])) {
+                        buffer.append("|");
+                        buffer.append(chars, i, 2);
+                        buffer.append("&");
+                        i += 2;
+                        flag = false;
+                    } else if (PinyinUtil.isShengmu(chars[i])) {
+                        buffer.append("|");
+                        buffer.append(chars[i]);
+                        buffer.append("&");
+                        flag = false;
+                        i++;
+                    } else {
+                        flag = false;
+                        buffer.append("&");
 //                    i++;
-                }
-                if (i == size)
-                    buffer.append("%");
-            } else {
-                /*if (i + 3 < size && PinyinUtil.isYunmu(chars[i], chars[i + 1],
-                    chars[i + 2], chars[i + 3])) {
-                    buffer.append(chars, i, 4);
-                    i += 4;
-                }else */if (i + 2 < size && PinyinUtil.isYunmu(chars[i], chars[i + 1], chars[i + 2])) {
-                    buffer.append(chars, i, 3);
-                    i += 3;
-                } else if (i + 1 < size && PinyinUtil.isYunmu(chars[i], chars[i + 1])) {
-                    buffer.append(chars, i, 2);
-                    i += 2;
-                } else if (PinyinUtil.isYunmu(chars[i])) {
-                    buffer.append(chars[i]);
-                    i++;
+                    }
+                    if (i == size)
+                        buffer.append("%");
                 } else {
-                    buffer.append("%");
+                    if (i + 2 < size && PinyinUtil.isYunmu(chars[i], chars[i + 1], chars[i + 2])) {
+                        buffer.append(chars, i, 3);
+                        i += 3;
+                    } else if (i + 1 < size && PinyinUtil.isYunmu(chars[i], chars[i + 1])) {
+                        buffer.append(chars, i, 2);
+                        i += 2;
+                    } else if (PinyinUtil.isYunmu(chars[i])) {
+                        buffer.append(chars[i]);
+                        i++;
+                    } else {
+                        buffer.append("%");
+                        i++;
+                    }
+                    flag = true;
                 }
-                flag = true;
             }
+            return buffer.toString();
+        }catch (Exception e){
+            e.printStackTrace();
         }
-
-        return buffer.toString();
+        return "";
     }
 
     public static boolean isShengmu(String str) {

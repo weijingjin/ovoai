@@ -4,7 +4,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.ovo.xfy.xfyun.XFYTTS;
+import com.ovo.xfy.tts.xfyun.XFYTTS;
 import com.unity3d.player.UnityPlayer;
 
 /***
